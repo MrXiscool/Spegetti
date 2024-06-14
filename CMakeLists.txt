@@ -3,10 +3,9 @@ project(Spegetti_Demo)
 
 set(SOURCES
 "Spegetti_Demo/Sources/main.cpp"
-"Spegetti/Spegetti.h"
+"Spegetti_Demo/Spegetti.h"
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-target_include_directories(${PROJECT_NAME} PUBLIC "Spegetti")
 target_include_directories(${PROJECT_NAME} PUBLIC "Spegetti_Demo")

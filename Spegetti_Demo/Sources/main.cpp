@@ -1,8 +1,24 @@
 #include <iostream>
-#include <Spegetti.h>
+#include "Headers/Spegetti_Demo.h"
+
+using namespace Spegetti_Demo;
 
 int main() {
 
-	print("Hello, World!");
+	Spegetti::Console::log("Project Started");
+
+	Start();
+
+	while (Running) {
+
+		Loop();
+	
+	}
+
+	End();
+	
+	Spegetti::Console::log("Finished Sucsefully");
+
+	return 0;
 
 }
