@@ -1,14 +1,14 @@
-#include "Spegetti.h"
+#include "Spegetti API.h"
 
 #pragma
 
-using namespace Spegetti;
+using namespace Spegetti_API;
 
 namespace Spegetti_Demo {
 
 	bool Running = true;
 
-	OS::Window win;
+	//OS::Window win;
 
 	class Player {
 
@@ -50,32 +50,26 @@ namespace Spegetti_Demo {
 
 	};
 
-	Player player;
+	//Player player;
 
 	void Start() {
 
 		Console::print("Hello, World!");
 		Console::print(OS::Get_Spegetti_Version());
 
-		win.Create();
-		
-		player.Start();
+		//win.Create();
 
 	}
 
 	void Loop() {
 
-		win.Update();
-
-		player.Update();
+		//win.Update();
 
 	}
 
 	void End() {
 
-		win.Destroy();
-
-		player.Destroy();
+		//win.Destroy();
 
 	}
 

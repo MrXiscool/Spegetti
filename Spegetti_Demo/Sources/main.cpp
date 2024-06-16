@@ -5,8 +5,6 @@ using namespace Spegetti_Demo;
 
 int main() {
 
-	Spegetti::Console::log("Project Started");
-
 	Start();
 
 	while (Running) {
@@ -16,8 +14,6 @@ int main() {
 	}
 
 	End();
-	
-	Spegetti::Console::log("Finished Sucsefully");
 
 	return 0;
 

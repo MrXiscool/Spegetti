@@ -23,11 +23,11 @@
 
 #ifndef Spegetti_Version
 
-#define Spegetti_Version "engine build : 6-3-2024";
+#define Spegetti_Version "engine build : 6-16-2024";
 
 #endif
 
-namespace Spegetti {
+namespace Spegetti_API {
 
 	namespace OS {
 
@@ -37,83 +37,85 @@ namespace Spegetti {
 
 		}
 
-		class Window {
+		/*class Window {
+
 		public:
 
-			HINSTANCE hInstance = GetModuleHandle(NULL);
-
-			HWND hwnd;
-			const char* CLASS_NAME = "Sample Window Class";
-			const char* Title = "Sample Window";
-
-			static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-				Window* windowPtr;
-				if (uMsg == WM_NCCREATE) {
-					windowPtr = static_cast<Window*>(reinterpret_cast<CREATESTRUCT*>(lParam)->lpCreateParams);
-					SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(windowPtr));
-				}
-				else {
-					windowPtr = reinterpret_cast<Window*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
-				}
-
-				if (windowPtr) {
-					return windowPtr->HandleMessage(uMsg, wParam, lParam);
-				}
-				else {
-					return DefWindowProc(hwnd, uMsg, wParam, lParam);
-				}
-			}
-
-
-			Window(HINSTANCE hInstance) : hwnd(nullptr) {
-
-				WNDCLASS wc = {};
-				wc.lpfnWndProc = WindowProc;
-				wc.hInstance = hInstance;
-				wc.lpszClassName = CLASS_NAME;
-				RegisterClass(&wc);
-			
-			}
+			bool running = true;
 
 			void Create() {
-				
-				hwnd = CreateWindowEx(0, CLASS_NAME, Title, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, NULL, this);
 
-				ShowWindow(hwnd, SW_SHOW);
+				const wchar_t* CLASS_NAME = L"HELLO WINDOW!"; //CLASS NAME
+
+				WNDCLASS wndClass = {};
+				wndClass.lpszClassName = CLASS_NAME;
+				wndClass.hInstance = m_hInstance;
+				wndClass.hIcon = LoadIcon(NULL, IDI_WINLOGO);
+				wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+				wndClass.lpfnWndProc = WindowProc;
+
+				RegisterClass(&wndClass);
+
+				DWORD style = WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU;
+
+				int width = 640;
+				int height = 480;
+
+				RECT rect;
+				rect.left = 250; //position X
+				rect.top = 250; //position Y
+				rect.right = rect.left + width; //size X
+				rect.bottom = rect.top + height; //size Y
+
+				AdjustWindowRect(&rect, style, false);
+
+				m_hWnd = CreateWindowEx(0, CLASS_NAME, L"HELLO WINDOW", style, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, m_hInstance, NULL);
+
+				ShowWindow(m_hWnd, SW_SHOW);
+
+			}
+
+			void Destroy() {
+
+				const wchar_t* CLASS_NAME = L"HELLO WINDOW!"; //CLASS NAME
+
+				UnregisterClass(CLASS_NAME, m_hInstance);
+
+			}
+
+			~Window() {
+
+				const wchar_t* CLASS_NAME = L"HELLO WINDOW!"; //CLASS NAME
+
+				UnregisterClass(CLASS_NAME, m_hInstance);
 
 			}
 
 			void Update() {
+
 				MSG msg = {};
-				while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+
+				while (PeekMessage(&msg, nullptr, 0u, 0u, PM_REMOVE)) {
+
+					if (msg.message == WM_QUIT) {
+
+						Destroy();
+
+					}
 
 					TranslateMessage(&msg);
 					DispatchMessage(&msg);
 
 				}
-			}
-
-			void Destroy() {
-
-				if (hwnd) {
-					DestroyWindow(hwnd);
-					hwnd = nullptr;
-				}
 
 			}
 
 		private:
-			LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
-				switch (uMsg) {
-				case WM_CLOSE:
-					PostQuitMessage(0);
-					break;
-				default:
-					return DefWindowProc(hwnd, uMsg, wParam, lParam);
-				}
-				return 0;
-			}
-		};
+
+			HINSTANCE m_hInstance;
+			HWND m_hWnd;
+
+		}; */
 
 	}
 
@@ -206,7 +208,6 @@ namespace Spegetti {
 
 			float x, y, z;
 
-			vec3();
 			vec3(float x, float y, float z) : x(0.0), y(0.0), z(0.0) {}
 
 			vec3 operator+(vec3 other) {
@@ -259,6 +260,8 @@ namespace Spegetti {
 			vec2 position;
 			vec2 rotation;
 			vec2 scale;
+			
+			Transform2D(vec2 position, vec2 rotation, vec2 scale) : position(Math::vec2(0, 0)), rotation(Math::vec2(0, 0)), scale(Math::vec2(1, 1)) {}
 
 		};
 
@@ -267,6 +270,8 @@ namespace Spegetti {
 			vec3 position;
 			vec3 rotation;
 			vec3 scale;
+
+			Transform3D(vec3 position, vec3 rotation, vec3 scale) : position(Math::vec3(0, 0, 0)), rotation(Math::vec3(0, 0, 0)), scale(Math::vec3(1, 1, 1)) {}
 
 		};
 
